@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "585275398572",
+    "project_id": "lettherebelightauth",
+    "storage_bucket": "lettherebelightauth.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:585275398572:android:050d4fde0791b60a048209",
+        "android_client_info": {
+          "package_name": "com.lettherebelight"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "585275398572-ovh0ukm4b7paqjs7onb776421hvoo0aq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCR5_HAHGLcBqXGJdLXVUbTiYqUrkSIokU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "585275398572-ovh0ukm4b7paqjs7onb776421hvoo0aq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

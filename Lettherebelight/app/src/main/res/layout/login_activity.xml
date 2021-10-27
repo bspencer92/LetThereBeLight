@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LoginActivity"
+    android:padding="20dp">
+
+
+    <TextView
+        android:id="@+id/txtViewBanner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="0dp"
+        android:fontFamily="@font/alfa_slab_one"
+        android:text="Let There Be Light!"
+        android:textSize="34sp"
+        android:textAlignment="center"/>
+
+    <EditText
+        android:id="@+id/editTxtRegisteredEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textEmailAddress"
+        android:hint="Email"
+        android:layout_below="@+id/txtViewBanner"
+        android:layout_marginTop="50dp"
+        />
+
+    <EditText
+        android:id="@+id/editTxtRegisteredPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPassword"
+        android:layout_below="@+id/editTxtRegisteredEmail"
+        android:layout_marginTop="15dp"
+        android:hint="Password"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editTxtRegisteredPassword"
+        android:layout_marginTop="20dp"
+        android:text="Login"
+        android:id="@+id/btnLogin" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnLogin"
+        android:layout_marginTop="20dp"
+        android:text="Forgot Password?"
+        android:id="@+id/txtViewForgotPassword"
+        android:textSize="20sp"/>
+
+    <TextView
+        android:id="@+id/txtViewRegister"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnLogin"
+        android:layout_alignBaseline="@+id/txtViewForgotPassword"
+        android:layout_marginStart="99dp"
+        android:layout_marginTop="21dp"
+        android:layout_marginRight="15dp"
+        android:layout_toEndOf="@+id/txtViewForgotPassword"
+        android:text="Register"
+        android:textSize="20sp" />
+
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:visibility="gone"
+        android:id="@+id/progressBarLaunchScreen"/>
+
+
+</RelativeLayout>
