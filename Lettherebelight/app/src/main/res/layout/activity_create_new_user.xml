@@ -7,13 +7,22 @@
     tools:context=".CreateNewUser"
     android:padding="15dp"
     >
-
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:adjustViewBounds="false"
+        android:backgroundTintMode="multiply"
+        android:cropToPadding="false"
+        android:scaleType="fitXY"
+        app:srcCompat="@drawable/lightbulb" />
 
     <EditText
         android:id="@+id/editTextNewEmailAddress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="65dp"
+        android:background="#80FFFFFF"
         android:ems="10"
         android:hint="Email"
         android:inputType="textEmailAddress" />
@@ -26,7 +35,8 @@
         android:inputType="textPassword"
         android:layout_marginTop="20dp"
         android:layout_below="@+id/editTextNewEmailAddress"
-        android:hint="Password"/>
+        android:hint="Password"
+        android:background="#80FFFFFF"/>
 
     <EditText
         android:id="@+id/editTextConfirmNewPassword"
@@ -36,7 +46,8 @@
         android:inputType="textPassword"
         android:layout_marginTop="20dp"
         android:layout_below="@+id/editTextNewPassword"
-        android:hint="Confirm Password"/>
+        android:hint="Confirm Password"
+        android:background="#80FFFFFF"/>
 
     <Button
         android:id="@+id/btnRegister"
@@ -44,7 +55,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/editTextConfirmNewPassword"
         android:layout_marginTop="20dp"
-        android:text="Register" />
+        android:text="Register"
+        android:background="#80FFFFFF"
+        android:textColor="@color/white"/>
 
     <TextView
         android:id="@+id/txtViewReturnToLogin"
@@ -52,10 +65,11 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/btnRegister"
         android:layout_centerInParent="true"
-        android:layout_marginTop="45dp"
+        android:layout_marginTop="65dp"
         android:layout_marginRight="15dp"
         android:text="Already have an account?"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:textColor="@color/white"/>
 
     <ProgressBar
         android:layout_width="wrap_content"

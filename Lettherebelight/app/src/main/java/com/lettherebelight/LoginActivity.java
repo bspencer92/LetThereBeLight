@@ -1,10 +1,12 @@
 package com.lettherebelight;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -17,8 +19,13 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener  {
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     private EditText editTxtRegisteredEmail, editTxtRegisteredPassword;
     private TextView txtViewForgotPassword, txtViewRegister;
@@ -47,13 +54,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
-            case R.id.txtViewRegister:{
+        switch (view.getId()) {
+            case R.id.txtViewRegister: {
                 startActivity(new Intent(this, CreateNewUser.class));
                 break;
             }
-            case R.id.btnLogin:{
-                attemptLogin(); 
+            case R.id.btnLogin: {
+                attemptLogin();
                 break;
             }
         }
@@ -62,22 +69,22 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void attemptLogin() {
         String email = editTxtRegisteredEmail.getText().toString().trim();
         String password = editTxtRegisteredPassword.getText().toString().trim();
-        if(email.isEmpty()){
+        if (email.isEmpty()) {
             editTxtRegisteredEmail.setError("Email is required");
             editTxtRegisteredEmail.requestFocus();
             return;
         }
-        if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             editTxtRegisteredEmail.setError("Please provide a valid email");
             editTxtRegisteredEmail.requestFocus();
             return;
         }
-        if(password.isEmpty()){
+        if (password.isEmpty()) {
             editTxtRegisteredPassword.setError("Password is required");
             editTxtRegisteredPassword.requestFocus();
             return;
         }
-        if(password.length() < 6){
+        if (password.length() < 6) {
             editTxtRegisteredPassword.setError("Password must contain 6 characters");
             editTxtRegisteredPassword.requestFocus();
         }
@@ -87,15 +94,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful()){
+                if (task.isSuccessful()) {
                     progressBar.setVisibility(View.GONE);
                     //User user = new User(fullName, email, password);
                     Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(LoginActivity.this, SetUpAccount.class);
+                    Intent intent = new Intent(LoginActivity.this, SplashActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                     finish();
-                }else{
+                } else {
                     progressBar.setVisibility(View.GONE);
                     Toast.makeText(LoginActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
                 }
@@ -103,4 +110,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         });
     }
+
+
 }

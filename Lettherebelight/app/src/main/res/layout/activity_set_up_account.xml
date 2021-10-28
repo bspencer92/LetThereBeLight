@@ -5,20 +5,49 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".SetUpAccount">
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:adjustViewBounds="false"
+        android:backgroundTintMode="multiply"
+        android:cropToPadding="false"
+        android:scaleType="fitXY"
+        app:srcCompat="@drawable/lightbulb" />
 
-    <include
-        android:id="@+id/app_bar"
-        layout="@layout/main_appbar" />
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/app_bar_account"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="#00000000"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageView3">
+
+
+        <TextView
+            android:id="@+id/txtViewBanner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/allerta_stencil"
+            android:text="Let There Be Light!"
+
+            android:textColor="@color/white"
+            android:textSize="25sp" />
+
+    </androidx.appcompat.widget.Toolbar>
 
     <androidx.cardview.widget.CardView
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_margin="40dp"
+        app:cardBackgroundColor="#6C5C5B5B"
         app:cardCornerRadius="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/app_bar">
+        app:layout_constraintTop_toBottomOf="@+id/app_bar_account">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -89,15 +118,14 @@
             </RadioGroup>
 
             <Button
+                android:id="@+id/btnUpdateAccount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
                 android:text="Update Account"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/radioGroup"
-                android:id="@+id/btnUpdateAccount"/>
-
+                app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
