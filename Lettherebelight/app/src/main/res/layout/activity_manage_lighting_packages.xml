@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ManageLightingPackages"
+    android:padding="5dp">
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:adjustViewBounds="false"
+        android:backgroundTintMode="multiply"
+        android:cropToPadding="false"
+        android:scaleType="fitXY"
+        app:srcCompat="@drawable/lightbulb"
+        tools:layout_editor_absoluteX="-31dp"
+        tools:layout_editor_absoluteY="126dp" />
+
+    <include
+        android:id="@+id/app_bar"
+        layout="@layout/main_appbar" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/app_bar"
+        android:hint="Enter a part description"
+        android:id="@+id/editTxtParts"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginRight="30dp"
+        android:background="#80FFFFFF"
+        android:ems="10"
+        android:inputType="textEmailAddress"
+        android:textColor="@color/black">
+
+    </EditText>
+    <Button
+        android:id="@+id/btnAddPart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editTxtParts"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="30dp"
+        android:background="#80FFFFFF"
+        android:text="Add part"
+        android:textColor="@color/white" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnAddPart"
+        android:layout_marginTop="15dp"
+        android:id="@+id/recViewParts"
+        android:background="#00FFFFFF"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:nestedScrollingEnabled="true"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/floatBtnLighting"
+        android:layout_below="@id/recViewParts"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="25dp"
+        android:backgroundTint="#FFFFFF"
+        android:src="@drawable/add"/>
+
+
+</RelativeLayout>

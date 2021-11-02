@@ -1,9 +1,12 @@
 <resources>
     <string name="app_name">Let there be light</string>
     <string-array name="toolBarMenu">
+        <item>What would you like to do?</item>
         <item>View Blue Prints</item>
         <item>View Lighting Packages</item>
         <item>Update Profile</item>
         <item>Logout</item>
     </string-array>
+
+
 </resources>

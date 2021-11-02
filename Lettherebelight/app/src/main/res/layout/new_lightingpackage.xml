@@ -1,0 +1,26 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#00424242">
+
+    <EditText
+        android:id="@+id/newPartText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:hint="New Part or Fixture"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnNewPart"
+        android:layout_below="@+id/newPartText"
+        android:layout_alignParentEnd="true"
+        android:textSize="16sp"
+        android:text="Save"
+        android:textAllCaps="false"
+        android:background="@android:color/transparent"
+        android:textColor="@android:color/darker_gray"/>
+
+</RelativeLayout>

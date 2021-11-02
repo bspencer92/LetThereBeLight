@@ -1,0 +1,30 @@
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    app:cardElevation="4dp"
+    app:cardCornerRadius="20dp"
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginVertical="8dp"
+    android:background="#00424242">
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:background="#00424242">
+
+
+        <CheckBox
+            android:id="@+id/lightPackageCheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:buttonTint="#FFEB3B"
+            android:backgroundTint="#6DFFFFFF"
+            android:hint="Lightingpackage hints"
+            android:paddingStart="8dp" />
+
+    </RelativeLayout>
+
+
+
+</androidx.cardview.widget.CardView>

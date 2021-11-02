@@ -1,4 +1,4 @@
-package com.lettherebelight;
+package com.lettherebelight.Entity;
 
 public class User {
     public String fullName,email, password, companyName;

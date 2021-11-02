@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PdfViewActivity"
+    android:padding="5dp">
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:adjustViewBounds="false"
+        android:backgroundTintMode="multiply"
+        android:cropToPadding="false"
+        android:scaleType="fitXY"
+        app:srcCompat="@drawable/lightbulb"
+        tools:layout_editor_absoluteX="-31dp"
+        tools:layout_editor_absoluteY="126dp" />
+
+    <include
+        android:id="@+id/app_bar"
+        layout="@layout/main_appbar" />
+
+    <ImageView
+        android:id="@+id/pdfImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="553dp"
+        android:layout_below="@+id/pdf_spinner"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="37dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="31dp"
+        android:layout_marginBottom="16dp"
+        app:srcCompat="@drawable/blue_print_png" />
+
+    <Spinner
+        android:id="@+id/pdf_spinner"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+       android:layout_below="@id/textView"
+        android:layout_centerInParent="true"/>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="52dp"
+        android:text="Select a print to view."
+        android:textColor="@color/white"
+       android:layout_below="@id/app_bar"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="10dp"/>
+
+
+
+</RelativeLayout>

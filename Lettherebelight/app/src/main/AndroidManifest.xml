@@ -10,6 +10,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LetThereBeLight">
         <activity
+            android:name=".PdfViewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ManageLightingPackages"
+            android:exported="false" />
+        <activity
+            android:name=".ManageBluePrints"
+            android:exported="false" />
+        <activity
             android:name=".SplashActivity"
             android:exported="false" />
         <activity
