@@ -8,6 +8,12 @@ public class LightingPackageModel {
 
     }
 
+    public LightingPackageModel(int id, int status, String partName) {
+        this.id = id;
+        this.status = status;
+        this.partName = partName;
+    }
+
     public int getId() {
         return id;
     }

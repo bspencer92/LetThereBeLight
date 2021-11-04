@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,17 +14,28 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 
+import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.lettherebelight.Adapter.LightingPackageAdapter;
+import com.lettherebelight.Model.LightingPackageModel;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class AddNewPart extends BottomSheetDialogFragment {
 
@@ -35,6 +47,7 @@ public class AddNewPart extends BottomSheetDialogFragment {
     DatabaseReference databaseReference;
     FirebaseAuth fAuth;
     FirebaseUser fUser;
+    ArrayList<LightingPackageModel> partList = new ArrayList<>();
     public static AddNewPart newInstance(){
         return new AddNewPart();
     }
@@ -82,6 +95,7 @@ public class AddNewPart extends BottomSheetDialogFragment {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if(toString().equals("")){
+                    newPartSaveBtn.setEnabled(false);
 
                 }else{
                     newPartSaveBtn.setEnabled(true);
@@ -99,9 +113,24 @@ public class AddNewPart extends BottomSheetDialogFragment {
         newPartSaveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                LightingPackageAdapter adapter = new LightingPackageAdapter();
+                LightingPackageModel part = new LightingPackageModel();
                 String text = newPartText.getText().toString();
-                DocumentReference documentReference = firestore.collection("../Projects/breads_projects/unit_types/bread_unit_types/lighting_package/breads_lighting_packages").document(fUser.getUid());
-                documentReference.set(text);
+                part.setPartName(text);
+               // adapter.getLightingPackageList().add(part);
+                partList.add(part);
+                DocumentReference documentReference = firestore.collection("users").document(fUser.getUid()+"/lighting_packages/"+ fUser.getUid()+"'s parts");
+                if(documentReference==null){
+                    Map<String, Object> partMap = new HashMap<>();
+                    partMap.put("partMap", partList);
+                    documentReference.set(partMap);
+                }else{
+                    documentReference.update("partMap", FieldValue.arrayUnion(part));
+                }
+
+
+
+
                 dismiss();
             }
         });
