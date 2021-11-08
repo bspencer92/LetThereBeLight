@@ -4,18 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity"
-    android:padding="5dp">
+    android:background="@drawable/lightbulb"
+    android:padding="5dp"
+    tools:context=".LoginActivity">
 
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:adjustViewBounds="false"
-        android:backgroundTintMode="multiply"
-        android:cropToPadding="false"
-        android:scaleType="fitXY"
-        app:srcCompat="@drawable/lightbulb" />
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/app_bar_login"
@@ -25,7 +17,7 @@
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageView3">
+        app:layout_constraintTop_toTopOf="parent">
 
 
         <TextView
@@ -103,16 +95,16 @@
         android:layout_marginRight="15dp"
         android:layout_toEndOf="@+id/txtViewForgotPassword"
         android:text="Register"
-        android:textSize="20sp"
-        android:textColor="@color/white"/>
+        android:textColor="@color/white"
+        android:textSize="20sp" />
 
     <ProgressBar
+        android:id="@+id/progressBarLaunchScreen"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:visibility="gone"
-        android:id="@+id/progressBarLaunchScreen"/>
+        android:visibility="gone" />
 
 
 </RelativeLayout>

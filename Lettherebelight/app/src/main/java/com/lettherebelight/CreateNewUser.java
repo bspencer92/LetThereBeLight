@@ -1,8 +1,5 @@
 package com.lettherebelight;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
@@ -13,6 +10,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -21,11 +21,12 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 public class CreateNewUser extends AppCompatActivity implements View.OnClickListener {
     private FirebaseAuth firebaseAuth;
-    private EditText  editTxtNewEmail, editTxtNewPassword, editTxtConfirmNewPassword;
+    private EditText editTxtNewEmail, editTxtNewPassword, editTxtConfirmNewPassword;
     private Button btnRegister;
     private ProgressBar progressBar;
     private FirebaseFirestore db;
     private TextView txtViewReturnToLogin;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,25 +35,25 @@ public class CreateNewUser extends AppCompatActivity implements View.OnClickList
 
 
         db = FirebaseFirestore.getInstance();
-       // editTxtFullName =(EditText)findViewById(R.id.editTxtFullName);
-        editTxtNewEmail =  findViewById(R.id.editTextNewEmailAddress);
+        // editTxtFullName =(EditText)findViewById(R.id.editTxtFullName);
+        editTxtNewEmail = findViewById(R.id.editTextNewEmailAddress);
         editTxtNewPassword = findViewById(R.id.editTextNewPassword);
-        editTxtConfirmNewPassword= findViewById(R.id.editTextConfirmNewPassword);
+        editTxtConfirmNewPassword = findViewById(R.id.editTextConfirmNewPassword);
         btnRegister = findViewById(R.id.btnRegister);
         txtViewReturnToLogin = findViewById(R.id.txtViewReturnToLogin);
         btnRegister.setOnClickListener(this);
         txtViewReturnToLogin.setOnClickListener(this);
-        progressBar =  findViewById(R.id.progressBarRegister);
+        progressBar = findViewById(R.id.progressBarRegister);
     }
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
-            case R.id.btnRegister:{
+        switch (view.getId()) {
+            case R.id.btnRegister: {
                 registerUser();
                 break;
             }
-            case R.id.txtViewReturnToLogin:{
+            case R.id.txtViewReturnToLogin: {
                 returnToLogin();
                 break;
             }
@@ -66,7 +67,7 @@ public class CreateNewUser extends AppCompatActivity implements View.OnClickList
 
     private void registerUser() {
         String email = editTxtNewEmail.getText().toString().trim();
-       // String fullName = editTxtFullName.getText().toString().trim();
+        // String fullName = editTxtFullName.getText().toString().trim();
         String password = editTxtNewPassword.getText().toString().trim();
         String confirmPassword = editTxtConfirmNewPassword.getText().toString().trim();
 
@@ -75,26 +76,26 @@ public class CreateNewUser extends AppCompatActivity implements View.OnClickList
 //            editTxtFullName.requestFocus();
 //            return;
 //        }
-        if(email.isEmpty()){
+        if (email.isEmpty()) {
             editTxtNewEmail.setError("Email is required");
             editTxtNewEmail.requestFocus();
             return;
         }
-        if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             editTxtNewEmail.setError("Please provide a valid email");
             editTxtNewEmail.requestFocus();
             return;
         }
-        if(password.isEmpty()){
+        if (password.isEmpty()) {
             editTxtNewPassword.setError("Password is required");
             editTxtNewPassword.requestFocus();
             return;
         }
-        if(password.length() < 6){
+        if (password.length() < 6) {
             editTxtNewPassword.setError("Password must contain 6 characters");
             editTxtNewPassword.requestFocus();
         }
-        if(!confirmPassword.equals(password)){
+        if (!confirmPassword.equals(password)) {
             editTxtConfirmNewPassword.setError("Passwords must match");
             editTxtConfirmNewPassword.requestFocus();
         }
@@ -103,7 +104,7 @@ public class CreateNewUser extends AppCompatActivity implements View.OnClickList
         firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful()){
+                if (task.isSuccessful()) {
                     progressBar.setVisibility(View.GONE);
                     //User user = new User(fullName, email, password);
                     Toast.makeText(CreateNewUser.this, "Registration Successful", Toast.LENGTH_SHORT).show();
@@ -111,7 +112,7 @@ public class CreateNewUser extends AppCompatActivity implements View.OnClickList
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                     finish();
-                }else{
+                } else {
                     progressBar.setVisibility(View.GONE);
                     Toast.makeText(CreateNewUser.this, "Registration Failed", Toast.LENGTH_SHORT).show();
                 }

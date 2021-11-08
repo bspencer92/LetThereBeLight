@@ -4,7 +4,7 @@ public class LightingPackageModel {
     private int id, status;
     private String partName;
 
-    public LightingPackageModel(){
+    public LightingPackageModel() {
 
     }
 

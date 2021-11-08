@@ -1,26 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/lightbulb"
     android:padding="15dp"
     tools:context=".CreateNewUser">
 
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:adjustViewBounds="false"
-        android:backgroundTintMode="multiply"
-        android:cropToPadding="false"
-        android:scaleType="fitXY"
-        app:srcCompat="@drawable/lightbulb" />
 
     <EditText
         android:id="@+id/editTextNewEmailAddress"
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
+
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="65dp"
         android:background="#80FFFFFF"
         android:ems="10"
@@ -29,9 +22,10 @@
 
     <EditText
         android:id="@+id/editTextNewPassword"
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/editTextNewEmailAddress"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:background="#80FFFFFF"
         android:ems="10"
@@ -40,9 +34,10 @@
 
     <EditText
         android:id="@+id/editTextConfirmNewPassword"
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/editTextNewPassword"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:background="#80FFFFFF"
         android:ems="10"
@@ -51,9 +46,11 @@
 
     <Button
         android:id="@+id/btnRegister"
-        android:layout_width="match_parent"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
+
         android:layout_below="@+id/editTextConfirmNewPassword"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:background="#80FFFFFF"
         android:text="Register"

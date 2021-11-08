@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,36 +39,37 @@ import java.util.Map;
 public class AddNewPart extends BottomSheetDialogFragment {
 
     public static final String TAG = "ActionBottomDialog";
+    private FirebaseFirestore firestore;
+    private StorageReference storageReference;
+    private DatabaseReference databaseReference;
+    private FirebaseAuth fAuth;
+    private FirebaseUser fUser;
+    private ArrayList<LightingPackageModel> partList = new ArrayList<>();
     private EditText newPartText;
     private Button newPartSaveBtn;
-    FirebaseFirestore firestore;
-    StorageReference storageReference;
-    DatabaseReference databaseReference;
-    FirebaseAuth fAuth;
-    FirebaseUser fUser;
-    ArrayList<LightingPackageModel> partList = new ArrayList<>();
-    public static AddNewPart newInstance(){
+
+    public static AddNewPart newInstance() {
         return new AddNewPart();
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState){
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setStyle(STYLE_NORMAL, R.style.DialogStyle);
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.new_lightingpackage, container, false);
         getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         return view;
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState){
+    public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         newPartText = getView().findViewById(R.id.newPartText);
-        newPartSaveBtn = getView().findViewById(R.id.btnNewPart );
+        newPartSaveBtn = getView().findViewById(R.id.btnNewPart);
 
         firestore = FirebaseFirestore.getInstance();
         fAuth = FirebaseAuth.getInstance();
@@ -78,11 +78,13 @@ public class AddNewPart extends BottomSheetDialogFragment {
         storageReference = FirebaseStorage.getInstance().getReference().child("LightingPackages");
         boolean isUpdate = false;
         final Bundle bundle = getArguments();
-        if(bundle != null){
+        if (bundle != null) {
             isUpdate = true;
             String part = bundle.getString("part");
             newPartText.setText(part);
-            if(part.length()>0){
+            assert part != null;
+            if (part.length() > 0) {
+
                 newPartSaveBtn.setTextColor(ContextCompat.getColor(getContext(), R.color.black));
             }
         }
@@ -94,10 +96,10 @@ public class AddNewPart extends BottomSheetDialogFragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if(toString().equals("")){
+                if (toString().equals("")) {
                     newPartSaveBtn.setEnabled(false);
 
-                }else{
+                } else {
                     newPartSaveBtn.setEnabled(true);
                     newPartSaveBtn.setTextColor(Color.BLACK);
                 }
@@ -117,31 +119,43 @@ public class AddNewPart extends BottomSheetDialogFragment {
                 LightingPackageModel part = new LightingPackageModel();
                 String text = newPartText.getText().toString();
                 part.setPartName(text);
-               // adapter.getLightingPackageList().add(part);
+                // adapter.getLightingPackageList().add(part);
                 partList.add(part);
-                DocumentReference documentReference = firestore.collection("users").document(fUser.getUid()+"/lighting_packages/"+ fUser.getUid()+"'s parts");
-                if(documentReference==null){
-                    Map<String, Object> partMap = new HashMap<>();
-                    partMap.put("partMap", partList);
-                    documentReference.set(partMap);
-                }else{
-                    documentReference.update("partMap", FieldValue.arrayUnion(part));
-                }
+                DocumentReference documentReference = firestore.collection("users").document(fUser.getUid() + "/lighting_packages/" + fUser.getUid() + "'s parts");
+
+                Map<String, Object> partMap = new HashMap<>();
+                partMap.put("partMap", partList);
+                documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            if (document.exists()) {
+                                documentReference.update("partMap", FieldValue.arrayUnion(part));
+
+                            } else {
+                                documentReference.set(partMap);
+
+                            }
+                        }
+                        dismiss();
+                    }
+                });
 
 
-
-
-                dismiss();
             }
         });
 
 
     }
+
     @Override
-    public void onDismiss(DialogInterface dialog){
+    public void onDismiss(@NonNull DialogInterface dialog) {
         Activity activity = getActivity();
-        if(activity instanceof DialogCloseListener){
-           ( (DialogCloseListener)activity).handleDialogClose(dialog);
+        if (activity instanceof DialogCloseListener) {
+            ((DialogCloseListener) activity).handleDialogClose(dialog);
+
+
         }
     }
 }

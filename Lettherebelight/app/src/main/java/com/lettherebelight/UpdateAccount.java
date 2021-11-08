@@ -2,45 +2,38 @@ package com.lettherebelight;
 
 import static android.content.ContentValues.TAG;
 
-import static com.lettherebelight.R.id.profile_image;
-
-import android.app.Activity;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.Spinner;
 import android.widget.Toast;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
+import com.lettherebelight.Entity.User;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import de.hdodenhof.circleimageview.CircleImageView;
-
-public class SetUpAccount extends AppCompatActivity implements View.OnClickListener {
-
+public class UpdateAccount extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
     private DatabaseReference mRef;
@@ -48,27 +41,16 @@ public class SetUpAccount extends AppCompatActivity implements View.OnClickListe
     private FirebaseFirestore dataBase;
     private String position = "unknown";
     private String userId;
+    private User user = new User();
     private EditText editTxtFullName, editTxtCompanyName;
     private RadioButton radioBtnApprentice, radioBtnJourneyman, radioBtnMaster;
     private Button btnUpdateAccount;
-    private CircleImageView profilePic;
-    private Uri imageUri;
-    // private User newUser = new User();
-    ActivityResultLauncher<Intent> profilePicActivity = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            result -> {
-                if (result.getResultCode() == Activity.RESULT_OK) {
-                    Intent data = result.getData();
-                    imageUri = data.getData();
-                    profilePic.setImageURI(imageUri);
-                }
-            }
-    );
+    private Spinner toolBarSpinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_set_up_account);
+        setContentView(R.layout.activity_update_account);
 
         editTxtFullName = findViewById(R.id.editTxtFullName);
         editTxtCompanyName = findViewById(R.id.editTxtCompanyName);
@@ -77,24 +59,45 @@ public class SetUpAccount extends AppCompatActivity implements View.OnClickListe
         radioBtnMaster = findViewById(R.id.radioBtnMaster);
         btnUpdateAccount = findViewById(R.id.btnUpdateAccount);
         btnUpdateAccount.setOnClickListener(this);
-        profilePic = findViewById(R.id.profile_image);
-        profilePic.setOnClickListener(this);
-
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
         mRef = FirebaseDatabase.getInstance().getReference().child("Users");
         StorageRef = FirebaseStorage.getInstance().getReference().child("ProfileImages");
         dataBase = FirebaseFirestore.getInstance();
+        toolBarSpinner = findViewById(R.id.toolBarSpinner);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.toolBarMenu, android.R.layout.simple_spinner_dropdown_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        toolBarSpinner.setAdapter(adapter);
+        toolBarSpinner.setSelection(0, false);
+        toolBarSpinner.setOnItemSelectedListener(this);
+        getUserInfo();
+    }
+
+    public void getUserInfo() {
+        DocumentReference documentReference = dataBase.collection("users").document(mUser.getUid());
+        documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                user = documentSnapshot.toObject(User.class);
+                Log.d("user data:", user.getFullName());
+                editTxtFullName.setHint(user.getFullName());
+                editTxtCompanyName.setHint(user.getCompanyName());
+                if (user.getPosition().equals("Master")) {
+                    radioBtnMaster.setChecked(true);
+                } else if (user.getPosition().equals("Journeyman")) {
+                    radioBtnJourneyman.setChecked(true);
+                } else if (user.getPosition().equals("Apprentice")) {
+                    radioBtnApprentice.setChecked(true);
+                }
 
 
+            }
+        });
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case profile_image: {
-                chooseProfilePic();
-            }
 
             case R.id.btnUpdateAccount: {
                 updateAccount();
@@ -123,9 +126,6 @@ public class SetUpAccount extends AppCompatActivity implements View.OnClickListe
         } else if (position.equals("unknown")) {
             radioBtnApprentice.setError("Please select a position");
             radioBtnApprentice.requestFocus();
-        } else if (imageUri == null) {
-            Toast.makeText(this, "Please select a profile image", Toast.LENGTH_LONG).show();
-            chooseProfilePic();
         }
         userId = mAuth.getCurrentUser().getUid();
         DocumentReference documentReference = dataBase.collection("users").document(userId);
@@ -135,33 +135,43 @@ public class SetUpAccount extends AppCompatActivity implements View.OnClickListe
         userMap.put("companyName", companyName);
         userMap.put("position", position);
 
-        documentReference.set(userMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+        documentReference.update(userMap).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
                 Log.d(TAG, "Profile updated. " + userId);
-                StorageRef.child(userId).putFile(imageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                        Intent intent = new Intent(SetUpAccount.this, MainActivity.class);
-                        startActivity(intent);
-                        Toast.makeText(SetUpAccount.this, "Profile updated.", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                Intent intent = new Intent(UpdateAccount.this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                finish();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(SetUpAccount.this, e.toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(UpdateAccount.this, e.toString(), Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 
-    public void chooseProfilePic() {
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("image/*");
-        profilePicActivity.launch(intent);
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        Intent intent = null;
+        if (adapterView.getItemAtPosition(i).toString().equals("View Blue Prints")) {
+            intent = new Intent(UpdateAccount.this, PdfViewActivity.class);
+        } else if (adapterView.getItemAtPosition(i).toString().equals("View Lighting Packages")) {
+            intent = new Intent(UpdateAccount.this, ManageLightingPackages.class);
+        } else if (adapterView.getItemAtPosition(i).toString().equals("Update Profile")) {
+            intent = new Intent(UpdateAccount.this, UpdateAccount.class);
+        } else if (adapterView.getItemAtPosition(i).toString().equals("Logout")) {
+            intent = new Intent(UpdateAccount.this, LoginActivity.class);
+            //firebaseAuth.signOut();
+        }
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish();
     }
 
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
 
+    }
 }

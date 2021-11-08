@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.lettherebelight">
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -10,13 +12,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LetThereBeLight">
         <activity
+            android:name=".ForgotPasswordActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UpdateAccount"
+            android:exported="false" />
+        <activity
             android:name=".PdfViewActivity"
             android:exported="false" />
         <activity
             android:name=".ManageLightingPackages"
-            android:exported="false" />
-        <activity
-            android:name=".ManageBluePrints"
             android:exported="false" />
         <activity
             android:name=".SplashActivity"

@@ -1,12 +1,7 @@
 package com.lettherebelight;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -15,24 +10,21 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
+    private FirebaseAuth firebaseAuth;
     private EditText editTxtRegisteredEmail, editTxtRegisteredPassword;
     private TextView txtViewForgotPassword, txtViewRegister;
     private Button btnLogin;
     private ProgressBar progressBar;
-    FirebaseAuth firebaseAuth;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +39,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         btnLogin.setOnClickListener(this);
         txtViewRegister.setOnClickListener(this);
         firebaseAuth = FirebaseAuth.getInstance();
+        txtViewForgotPassword = findViewById(R.id.txtViewForgotPassword);
+        txtViewForgotPassword.setOnClickListener(this);
 
 
     }
@@ -60,6 +54,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             }
             case R.id.btnLogin: {
                 attemptLogin();
+                break;
+            }
+            case R.id.txtViewForgotPassword:{
+                startActivity((new Intent(this, ForgotPasswordActivity.class)));
                 break;
             }
         }

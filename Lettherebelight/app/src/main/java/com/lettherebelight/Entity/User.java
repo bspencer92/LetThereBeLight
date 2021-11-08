@@ -1,15 +1,27 @@
 package com.lettherebelight.Entity;
 
 public class User {
-    public String fullName,email, password, companyName;
+    public String fullName, email, password, companyName, position;
 
-    public User(){};
+    public User() {
+    }
 
-    public User(String fullName,  String email, String password, String companyName) {
+    ;
+
+    public User(String fullName, String email, String password, String companyName, String position) {
         this.fullName = fullName;
         this.email = email;
         this.password = password;
         this.companyName = companyName;
+        this.position = position;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
     }
 
     public String getFullName() {

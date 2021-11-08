@@ -10,7 +10,8 @@ public class PDF {
         this.fileId = fileId;
     }
 
-    public PDF (){}
+    public PDF() {
+    }
 
     public String getFileName() {
         return fileName;

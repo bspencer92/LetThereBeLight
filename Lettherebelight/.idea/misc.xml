@@ -4,19 +4,26 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/brads/AndroidStudioProjects/Lettherebelight/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.30572916666666666" />
+        <entry key="..\:/Users/brads/AndroidStudioProjects/Lettherebelight/app/src/main/res/drawable/add.xml" value="0.2578125" />
         <entry key="..\:/Users/brads/AndroidStudioProjects/Lettherebelight/app/src/main/res/drawable/ic_launcher_background.xml" value="0.30572916666666666" />
         <entry key="..\:/Users/brads/AndroidStudioProjects/Lettherebelight/app/src/main/res/layout/activity_create_new_user.xml" value="0.30416666666666664" />
+        <entry key="..\:/Users/brads/AndroidStudioProjects/Lettherebelight/app/src/main/res/layout/activity_forgot_password.xml" value="0.30416666666666664" />
         <entry key="..\:/Users/brads/AndroidStudioProjects/Lettherebelight/app/src/main/res/layout/activity_main.xml" value="0.264" />
         <entry key="..\:/Users/brads/AndroidStudioProjects/Lettherebelight/app/src/main/res/layout/activity_manage_blue_prints.xml" value="0.30416666666666664" />
         <entry key="..\:/Users/brads/AndroidStudioProjects/Lettherebelight/app/src/main/res/layout/activity_manage_lighting_packages.xml" value="0.28229166666666666" />
         <entry key="..\:/Users/brads/AndroidStudioProjects/Lettherebelight/app/src/main/res/layout/activity_pdf_view.xml" value="0.2" />
-        <entry key="..\:/Users/brads/AndroidStudioProjects/Lettherebelight/app/src/main/res/layout/activity_set_up_account.xml" value="0.30416666666666664" />
+        <entry key="..\:/Users/brads/AndroidStudioProjects/Lettherebelight/app/src/main/res/layout/activity_set_up_account.xml" value="0.2" />
         <entry key="..\:/Users/brads/AndroidStudioProjects/Lettherebelight/app/src/main/res/layout/activity_splash.xml" value="0.26875" />
+        <entry key="..\:/Users/brads/AndroidStudioProjects/Lettherebelight/app/src/main/res/layout/activity_update_account.xml" value="0.1875" />
+        <entry key="..\:/Users/brads/AndroidStudioProjects/Lettherebelight/app/src/main/res/layout/activity_view_pdf2.xml" value="0.13333333333333333" />
+        <entry key="..\:/Users/brads/AndroidStudioProjects/Lettherebelight/app/src/main/res/layout/fragment_file_chooser.xml" value="0.13333333333333333" />
         <entry key="..\:/Users/brads/AndroidStudioProjects/Lettherebelight/app/src/main/res/layout/lightPackage_layout.xml" value="0.30416666666666664" />
+        <entry key="..\:/Users/brads/AndroidStudioProjects/Lettherebelight/app/src/main/res/layout/lightpackage_layout.xml" value="0.30416666666666664" />
         <entry key="..\:/Users/brads/AndroidStudioProjects/Lettherebelight/app/src/main/res/layout/login_activity.xml" value="0.30416666666666664" />
         <entry key="..\:/Users/brads/AndroidStudioProjects/Lettherebelight/app/src/main/res/layout/main_appbar.xml" value="0.30416666666666664" />
         <entry key="..\:/Users/brads/AndroidStudioProjects/Lettherebelight/app/src/main/res/layout/new_lightingPackage.xml" value="0.30416666666666664" />
         <entry key="..\:/Users/brads/AndroidStudioProjects/Lettherebelight/app/src/main/res/layout/new_lightingpackage.xml" value="0.30416666666666664" />
+        <entry key="..\:/Users/brads/AndroidStudioProjects/Lettherebelight/app/src/main/res/layout/rv_item.xml" value="0.23072916666666668" />
       </map>
     </option>
   </component>

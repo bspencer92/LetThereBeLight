@@ -1,5 +1,6 @@
 package com.lettherebelight;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.pdf.PdfRenderer;
 import android.os.Bundle;
@@ -24,15 +25,15 @@ import java.util.ArrayList;
 
 public class PdfViewActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
+    private static String FILE_NAME;
     private PdfRenderer mPdfRenderer;
     private PdfRenderer.Page mPdfPage;
     private ImageView pdfImageView;
-    private static String FILE_NAME;
     private int pdfId;
     private ArrayList<PDF> pdfList = new ArrayList<PDF>();
 
-    private Spinner pdfSpinner;
-    private ManageBluePrints manageBluePrints = new ManageBluePrints();
+    private Spinner pdfSpinner, toolBarSpinner;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,14 +44,21 @@ public class PdfViewActivity extends AppCompatActivity implements AdapterView.On
         createPdfList();
         ArrayList<String> spinnerList = new ArrayList<>();
         spinnerList.add("select a blueprint");
-        for(int i = 0; i < pdfList.size(); i++){
+        for (int i = 0; i < pdfList.size(); i++) {
             spinnerList.add(pdfList.get(i).getFileName());
-        }Log.d("myTag", spinnerList.get(0));
+        }
+        Log.d("myTag", spinnerList.get(0));
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, spinnerList);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         pdfSpinner.setAdapter(adapter);
         pdfSpinner.setSelection(0, false);
         pdfSpinner.setOnItemSelectedListener(this);
+        toolBarSpinner = findViewById(R.id.toolBarSpinner);
+        ArrayAdapter<CharSequence> toolBarAdapter = ArrayAdapter.createFromResource(this, R.array.toolBarMenu, android.R.layout.simple_spinner_dropdown_item);
+        toolBarAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        toolBarSpinner.setAdapter(toolBarAdapter);
+        toolBarSpinner.setSelection(0, false);
+        toolBarSpinner.setOnItemSelectedListener(this);
 
 
     }
@@ -86,7 +94,6 @@ public class PdfViewActivity extends AppCompatActivity implements AdapterView.On
             mPdfRenderer.close();
         }
     }
-
 
 
     /**
@@ -141,12 +148,30 @@ public class PdfViewActivity extends AppCompatActivity implements AdapterView.On
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        FILE_NAME = adapterView.getItemAtPosition(i).toString();
-        if(FILE_NAME.contains(".pdf")){
-            pdfId = pdfList.get(i-1).getFileId();
-            Log.d("in onItemSelected", FILE_NAME);
-            tryToOpenPdf();
+        if (adapterView.getId() == R.id.pdf_spinner) {
+            FILE_NAME = adapterView.getItemAtPosition(i).toString();
+            if (FILE_NAME.contains(".pdf")) {
+                pdfId = pdfList.get(i - 1).getFileId();
+                Log.d("in onItemSelected", FILE_NAME);
+                tryToOpenPdf();
+            }
+        } else if (adapterView.getId() == R.id.toolBarSpinner) {
+            Intent intent = null;
+            if (adapterView.getItemAtPosition(i).toString().equals("View Blue Prints")) {
+                intent = new Intent(PdfViewActivity.this, PdfViewActivity.class);
+            } else if (adapterView.getItemAtPosition(i).toString().equals("View Lighting Packages")) {
+                intent = new Intent(PdfViewActivity.this, ManageLightingPackages.class);
+            } else if (adapterView.getItemAtPosition(i).toString().equals("Update Profile")) {
+                intent = new Intent(PdfViewActivity.this, UpdateAccount.class);
+            } else if (adapterView.getItemAtPosition(i).toString().equals("Logout")) {
+                intent = new Intent(PdfViewActivity.this, LoginActivity.class);
+                //firebaseAuth.signOut();
+            }
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            finish();
         }
+
 
     }
 
@@ -154,4 +179,6 @@ public class PdfViewActivity extends AppCompatActivity implements AdapterView.On
     public void onNothingSelected(AdapterView<?> adapterView) {
 
     }
+
+
 }
